@@ -36,7 +36,7 @@ public class Deck {
     private List<CustomCategory> customCategories;
 
     @Builder.Default
-    @ManyToMany
+    @OneToMany
     private List<Card> cards = new ArrayList<>();
 
     @Builder.Default

@@ -6,4 +6,5 @@ import lombok.Data;
 public class CardRequest {
     private String question;
     private String answer;
+    private Long deckId;
 }

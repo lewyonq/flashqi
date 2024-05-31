@@ -4,8 +4,6 @@ import com.lewyonq.flashqi.deck.Deck;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Data
 @Builder
@@ -23,8 +21,8 @@ public class Card {
     @Column(nullable = false)
     private String answer;
 
-    @ManyToMany
-    private List<Deck> decks;
+    @ManyToOne
+    private Deck deck;
 
     private Long howManyWatched;
     private Long howManyPassed;
