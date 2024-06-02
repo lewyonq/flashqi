@@ -1,14 +1,7 @@
 package com.lewyonq.flashqi.card;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,14 +9,23 @@ import lombok.RequiredArgsConstructor;
 public class CardController {
     private final CardService cardService;
 
-    @GetMapping
-    public List<Card> getAllCards() {
-        return cardService.getAllCards();
+    @GetMapping("/{id}")
+    public Card getCard(@PathVariable Long id) {
+        return this.cardService.getCardById(id);
     }
 
     @PostMapping("/add")
-    public void createDeck(@RequestBody CardRequest cardRequest) {
-        cardService.saveCard(cardRequest);
+    public Card createCard(@RequestBody CardRequest cardRequest) {
+        return this.cardService.saveCard(cardRequest);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteCard(@PathVariable Long id) {
+        cardService.deleteCard(id);
+    }
+
+    @PutMapping("/edit/{id}")
+    public Card updateCard(@PathVariable Long id, @RequestBody CardRequest cardRequest) {
+        return this.cardService.updateCard(id, cardRequest);
+    }
 }

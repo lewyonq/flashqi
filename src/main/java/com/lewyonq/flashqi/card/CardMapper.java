@@ -19,4 +19,9 @@ public class CardMapper {
                 .howManyPassed(0L)
                 .build();
     }
+
+    public void updateEntityFromRequest(Card card, CardRequest cardRequest) {
+        card.setQuestion(cardRequest.getQuestion());
+        card.setAnswer(cardRequest.getAnswer());
+    }
 }

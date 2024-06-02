@@ -24,7 +24,6 @@ public class Card {
     @ManyToOne
     private Deck deck;
 
-    private Long howManyWatched;
-    private Long howManyPassed;
-    private Long howManyFailed;
+    private Long howManyPassed = 0L;
+    private Long howManyFailed = 0L;
 }
