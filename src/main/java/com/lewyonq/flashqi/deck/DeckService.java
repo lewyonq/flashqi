@@ -2,6 +2,7 @@ package com.lewyonq.flashqi.deck;
 
 import java.util.List;
 
+import com.lewyonq.flashqi.card.Card;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +45,9 @@ public class DeckService {
 
     public List<Deck> getAllDecks() {
         return this.deckRepository.findAll();
+    }
+
+    public List<Card> getCardsForDeck(Long deckId) {
+        return this.getDeckById(deckId).getCards();
     }
 }

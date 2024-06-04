@@ -2,6 +2,7 @@ package com.lewyonq.flashqi.deck;
 
 import java.util.List;
 
+import com.lewyonq.flashqi.card.Card;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,26 +22,31 @@ public class DeckController {
 
     @GetMapping
     public List<Deck> getAllDecks() {
-        return deckService.getAllDecks();
+        return this.deckService.getAllDecks();
     }
 
     @GetMapping("/{id}")
     public Deck getDeckById(@PathVariable Long id) {
-        return deckService.getDeckById(id);
+        return this.deckService.getDeckById(id);
+    }
+
+    @GetMapping("/{id}/cards")
+    public List<Card> getCards(@PathVariable Long id) {
+        return this.deckService.getCardsForDeck(id);
     }
 
     @PostMapping("/add")
     public Deck createDeck(@RequestBody DeckRequest deckRequest) {
-        return deckService.saveDeck(deckRequest);
+        return this.deckService.saveDeck(deckRequest);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public Deck updateDeck(@PathVariable Long id, @RequestBody DeckRequest deckRequest) {
-        return deckService.updateDeck(id, deckRequest);
+        return this.deckService.updateDeck(id, deckRequest);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteDeck(@PathVariable Long id) {
-        deckService.deleteDeck(id);
+        this.deckService.deleteDeck(id);
     }
 }
