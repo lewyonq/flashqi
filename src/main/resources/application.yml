@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: flashqi
+  datasource:
+    url: jdbc:h2:~/flashqidb
+    driver-class-name: org.h2.Driver
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
