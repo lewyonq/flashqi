@@ -2,7 +2,6 @@ package com.lewyonq.flashqi.deck;
 
 import com.lewyonq.flashqi.card.Card;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;

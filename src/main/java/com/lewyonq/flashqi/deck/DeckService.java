@@ -1,6 +1,5 @@
 package com.lewyonq.flashqi.deck;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

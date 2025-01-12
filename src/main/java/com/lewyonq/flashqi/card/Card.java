@@ -2,9 +2,7 @@ package com.lewyonq.flashqi.card;
 
 import com.lewyonq.flashqi.deck.Deck;
 import jakarta.persistence.*;
-import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
