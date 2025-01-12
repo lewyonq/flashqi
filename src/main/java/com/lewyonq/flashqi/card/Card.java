@@ -4,6 +4,7 @@ import com.lewyonq.flashqi.deck.Deck;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,11 +19,11 @@ public class Card {
     private Long id;
 
     @Column(nullable = false)
-    private String question;
+    public String question;
 
     @Column(nullable = false)
-    private String answer;
+    public String answer;
 
     @ManyToMany(mappedBy = "cards")
-    private List<Deck> decks;
+    private List<Deck> decks = new ArrayList<>();
 }
