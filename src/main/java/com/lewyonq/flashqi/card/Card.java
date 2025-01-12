@@ -8,22 +8,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    public String question;
+    private String question;
 
     @Column(nullable = false)
-    public String answer;
+    private String answer;
 
     @ManyToMany(mappedBy = "cards")
-    private List<Deck> decks = new ArrayList<>();
+    private List<Deck> decks;
+
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 }

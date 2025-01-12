@@ -1,0 +1,24 @@
+package com.lewyonq.flashqi.deck;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class DeckService {
+    private final DeckRepository deckRepository;
+
+    public DeckService(DeckRepository deckRepository) {
+        this.deckRepository = deckRepository;
+    }
+
+    public Deck saveDeck(Deck deck) {
+        System.out.println("dupa" + deck.toString());
+        return deckRepository.save(deck);
+    }
+
+    public List<Deck> getDecks() {
+        return deckRepository.findAll();
+    }
+}

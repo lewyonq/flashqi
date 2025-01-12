@@ -13,7 +13,6 @@ public class CardService {
     }
 
     public Card saveCard(Card card) {
-        System.out.println("Saving card: " + card.question + card.answer);
         return cardRepository.save(card);
     }
 
