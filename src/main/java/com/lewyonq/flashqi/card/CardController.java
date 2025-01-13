@@ -13,11 +13,6 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @PostMapping("/add")
-    public Card saveCard(@RequestBody Card card) {
-        return cardService.saveCard(card);
-    }
-
     @GetMapping()
     public List<Card> getCards() {
         return cardService.getCards();
