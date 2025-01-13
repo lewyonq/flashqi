@@ -13,7 +13,6 @@ public class DeckService {
     }
 
     public Deck saveDeck(Deck deck) {
-        System.out.println("dupa" + deck.toString());
         return deckRepository.save(deck);
     }
 

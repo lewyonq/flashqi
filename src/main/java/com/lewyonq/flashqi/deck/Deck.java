@@ -3,7 +3,6 @@ package com.lewyonq.flashqi.deck;
 import com.lewyonq.flashqi.card.Card;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +23,7 @@ public class Deck {
             joinColumns = @JoinColumn(name = "deck_id"),
             inverseJoinColumns = @JoinColumn(name = "card_id")
     )
-    private List<Card> cards = new ArrayList<>();
+    private List<Card> cards;
 
     public String getName() {
         return name;

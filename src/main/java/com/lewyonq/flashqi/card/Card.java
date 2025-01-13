@@ -20,7 +20,6 @@ public class Card {
     @ManyToMany(mappedBy = "cards")
     private List<Deck> decks;
 
-
     public String getQuestion() {
         return question;
     }
