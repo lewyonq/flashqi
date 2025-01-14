@@ -27,6 +27,9 @@ public class Card {
     }
 
     public void setQuestion(String question) {
+        if (question == null) {
+            throw new IllegalArgumentException("Question cannot be null");
+        }
         this.question = question;
     }
 
@@ -35,6 +38,9 @@ public class Card {
     }
 
     public void setAnswer(String answer) {
+        if (answer == null) {
+            throw new IllegalArgumentException("Answer cannot be null");
+        }
         this.answer = answer;
     }
 
