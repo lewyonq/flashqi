@@ -1,5 +1,6 @@
 package com.lewyonq.flashqi.card;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lewyonq.flashqi.deck.Deck;
 import jakarta.persistence.*;
 
@@ -18,6 +19,7 @@ public class Card {
     private String answer;
 
     @ManyToMany(mappedBy = "cards")
+    @JsonIgnore
     private List<Deck> decks;
 
     public String getQuestion() {
@@ -38,5 +40,9 @@ public class Card {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Deck> getDecks() {
+        return decks;
     }
 }

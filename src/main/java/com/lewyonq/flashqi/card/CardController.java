@@ -17,4 +17,14 @@ public class CardController {
     public List<Card> getCards() {
         return cardService.getCards();
     }
+
+    @PostMapping("/create")
+    public Card create(@RequestBody Card card) {
+        return cardService.saveCard(card);
+    }
+
+    @PostMapping("/{cardId}/add-to-deck")
+    public Card addToDeck(@RequestBody Long deckId, @PathVariable Long cardId) {
+        return cardService.addCardToDeck(cardId, deckId);
+    }
 }
