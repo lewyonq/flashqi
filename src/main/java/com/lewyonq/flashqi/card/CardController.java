@@ -1,11 +1,13 @@
 package com.lewyonq.flashqi.card;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("/api/v1/cards")
 public class CardController {
     private final CardService cardService;
 
@@ -13,18 +15,26 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping()
-    public List<Card> getCards() {
-        return cardService.getCards();
+    @GetMapping
+    public ResponseEntity<List<Card>> getCards() {
+        return ResponseEntity.ok(cardService.getCards());
     }
 
-    @PostMapping("/create")
-    public Card create(@RequestBody Card card) {
-        return cardService.saveCard(card);
+    @PostMapping
+    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO) {
+        Card savedCard = cardService.saveCard(mapToCard(cardDTO));
+        return ResponseEntity.created(URI.create("/api/v1/cards/" + savedCard.getId())).body(savedCard);
     }
 
-    @PostMapping("/{cardId}/add-to-deck")
-    public Card addToDeck(@RequestBody Long deckId, @PathVariable Long cardId) {
-        return cardService.addCardToDeck(cardId, deckId);
+    @PostMapping("/{cardId}/decks/{deckId}")
+    public ResponseEntity<Card> addToDeck(@PathVariable Long cardId, @PathVariable Long deckId) {
+        return ResponseEntity.ok(cardService.addCardToDeck(cardId, deckId));
+    }
+
+    private Card mapToCard(CardDTO cardDTO) {
+        Card card = new Card();
+        card.setQuestion(cardDTO.getQuestion());
+        card.setAnswer(cardDTO.getAnswer());
+        return card;
     }
 }

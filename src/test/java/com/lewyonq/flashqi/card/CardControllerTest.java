@@ -42,10 +42,10 @@ class CardControllerTest {
     void shouldCreateCard() throws Exception {
         when(cardService.saveCard(any(Card.class))).thenReturn(testCard);
 
-        mockMvc.perform(post("/cards/create")
+        mockMvc.perform(post("/api/v1/cards")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(testCard)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.question").value("Test Question"))
                 .andExpect(jsonPath("$.answer").value("Test Answer"));
     }
@@ -55,7 +55,7 @@ class CardControllerTest {
         List<Card> cards = Arrays.asList(testCard);
         when(cardService.getCards()).thenReturn(cards);
 
-        mockMvc.perform(get("/cards"))
+        mockMvc.perform(get("/api/v1/cards"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].question").value("Test Question"))
                 .andExpect(jsonPath("$[0].answer").value("Test Answer"));
@@ -68,9 +68,9 @@ class CardControllerTest {
 
         when(cardService.addCardToDeck(cardId, deckId)).thenReturn(testCard);
 
-        mockMvc.perform(post("/cards/{cardId}/add-to-deck", cardId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(String.valueOf(deckId)))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/v1/cards/{cardId}/decks/{deckId}", cardId, deckId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.question").value("Test Question"))
+                .andExpect(jsonPath("$.answer").value("Test Answer"));
     }
 } 
