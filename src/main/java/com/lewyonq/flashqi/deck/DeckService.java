@@ -13,7 +13,8 @@ public class DeckService {
         this.deckRepository = deckRepository;
     }
 
-    public Deck saveDeck(Deck deck) {
+    public Deck saveDeck(DeckDTO deckDTO) {
+        Deck deck = mapToDeck(deckDTO);
         return deckRepository.save(deck);
     }
 
@@ -28,5 +29,12 @@ public class DeckService {
         deckRepository.save(deck);
 
         return card;
+    }
+
+    private Deck mapToDeck(DeckDTO deckDTO) {
+        Deck deck = new Deck();
+        deck.setName(deckDTO.getName());
+        deck.setDescription(deckDTO.getDescription());
+        return deck;
     }
 }

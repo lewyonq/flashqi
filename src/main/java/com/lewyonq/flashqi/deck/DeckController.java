@@ -28,7 +28,7 @@ public class DeckController {
 
     @PostMapping
     public ResponseEntity<Deck> saveDeck(@RequestBody DeckDTO deckDTO) {
-        Deck savedDeck = deckService.saveDeck(mapToDeck(deckDTO));
+        Deck savedDeck = deckService.saveDeck(deckDTO);
         return ResponseEntity.created(URI.create("api/v1/decks/" + savedDeck.getId())).body(savedDeck);
     }
 
@@ -38,12 +38,5 @@ public class DeckController {
         Card cardWithDeck = deckService.addCardToDeck(deckId, card);
         return ResponseEntity.created(URI.create("api/v1/decks" + deckId + "/cards" + cardWithDeck.getId()))
                 .body(cardWithDeck);
-    }
-
-    private Deck mapToDeck(DeckDTO deckDTO) {
-        Deck deck = new Deck();
-        deck.setName(deckDTO.getName());
-        deck.setDescription(deckDTO.getDescription());
-        return deck;
     }
 }

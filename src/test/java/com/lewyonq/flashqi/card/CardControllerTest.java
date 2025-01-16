@@ -40,7 +40,7 @@ class CardControllerTest {
 
     @Test
     void shouldCreateCard() throws Exception {
-        when(cardService.saveCard(any(Card.class))).thenReturn(testCard);
+        when(cardService.saveCard(any(CardDTO.class))).thenReturn(testCard);
 
         mockMvc.perform(post("/api/v1/cards")
                 .contentType(MediaType.APPLICATION_JSON)
