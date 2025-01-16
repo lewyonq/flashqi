@@ -25,11 +25,18 @@ public class Deck {
     )
     private List<Card> cards;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
         this.name = name;
     }
 

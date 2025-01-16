@@ -16,7 +16,8 @@ public class CardService {
         this.deckRepository = deckRepository;
     }
 
-    public Card saveCard(Card card) {
+    public Card saveCard(CardDTO cardDTO) {
+        Card card = mapToCard(cardDTO);
         return cardRepository.save(card);
     }
 
@@ -32,6 +33,14 @@ public class CardService {
         deck.getCards().add(card);
         deckRepository.save(deck);
 
+        return card;
+    }
+
+
+    private Card mapToCard(CardDTO cardDTO) {
+        Card card = new Card();
+        card.setQuestion(cardDTO.getQuestion());
+        card.setAnswer(cardDTO.getAnswer());
         return card;
     }
 }

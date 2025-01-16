@@ -22,19 +22,12 @@ public class CardController {
 
     @PostMapping
     public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO) {
-        Card savedCard = cardService.saveCard(mapToCard(cardDTO));
+        Card savedCard = cardService.saveCard(cardDTO);
         return ResponseEntity.created(URI.create("/api/v1/cards/" + savedCard.getId())).body(savedCard);
     }
 
     @PostMapping("/{cardId}/decks/{deckId}")
     public ResponseEntity<Card> addToDeck(@PathVariable Long cardId, @PathVariable Long deckId) {
         return ResponseEntity.ok(cardService.addCardToDeck(cardId, deckId));
-    }
-
-    private Card mapToCard(CardDTO cardDTO) {
-        Card card = new Card();
-        card.setQuestion(cardDTO.getQuestion());
-        card.setAnswer(cardDTO.getAnswer());
-        return card;
     }
 }
