@@ -25,11 +25,18 @@ public class CardService {
         return cardRepository.findAll();
     }
 
-    //todo: add own exception
-
     public Card addCardToDeck(Long cardId, Long deckId) {
-        Card card = cardRepository.findById(cardId).orElseThrow();
+        if (cardId == null || deckId == null) {
+            throw new IllegalArgumentException("Card ID and Deck ID cannot be null");
+        }
+        
         Deck deck = deckRepository.findById(deckId).orElseThrow();
+
+        if (deck.getCards().stream().anyMatch(c -> c.getId().equals(cardId))) {
+            throw new IllegalStateException("This card is already added to deck " + deck.getName() + "!");
+        }
+
+        Card card = cardRepository.findById(cardId).orElseThrow();
         deck.getCards().add(card);
         deckRepository.save(deck);
 
