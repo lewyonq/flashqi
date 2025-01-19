@@ -22,20 +22,20 @@ public class DeckController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Deck>> getDecks() {
+    public ResponseEntity<List<DeckDTO>> getDecks() {
         return ResponseEntity.ok(deckService.getDecks());
     }
 
     @PostMapping
-    public ResponseEntity<Deck> saveDeck(@RequestBody DeckDTO deckDTO) {
-        Deck savedDeck = deckService.saveDeck(deckDTO);
+    public ResponseEntity<DeckDTO> saveDeck(@RequestBody DeckDTO deckDTO) {
+        DeckDTO savedDeck = deckService.saveDeck(deckDTO);
         return ResponseEntity.created(URI.create("api/v1/decks/" + savedDeck.getId())).body(savedDeck);
     }
 
     @PostMapping("/{deckId}/create-card")
-    public ResponseEntity<Card> addCardToDeck(@PathVariable Long deckId, @RequestBody CardDTO cardDTO) {
-        Card card = cardService.saveCard(cardDTO);
-        Card cardWithDeck = deckService.addCardToDeck(deckId, card);
+    public ResponseEntity<CardDTO> addCardToDeck(@PathVariable Long deckId, @RequestBody CardDTO cardDTO) {
+        CardDTO savedCard = cardService.saveCard(cardDTO);
+        CardDTO cardWithDeck = deckService.addCardToDeck(deckId, savedCard);
         return ResponseEntity.created(URI.create("api/v1/decks" + deckId + "/cards" + cardWithDeck.getId()))
                 .body(cardWithDeck);
     }

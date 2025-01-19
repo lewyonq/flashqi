@@ -1,9 +1,10 @@
 package com.lewyonq.flashqi.deck;
 
-import com.lewyonq.flashqi.card.Card;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.lewyonq.flashqi.card.Card;
 
 @Service
 public class DeckService {
@@ -13,22 +14,24 @@ public class DeckService {
         this.deckRepository = deckRepository;
     }
 
-    public Deck saveDeck(DeckDTO deckDTO) {
+    public DeckDTO saveDeck(DeckDTO deckDTO) {
         Deck deck = mapToDeck(deckDTO);
-        return deckRepository.save(deck);
+        return mapToDTO(deckRepository.save(deck));
     }
 
-    public List<Deck> getDecks() {
-        return deckRepository.findAll();
+    public List<DeckDTO> getDecks() {
+        return deckRepository.findAll()
+            .stream()
+            .map(this::mapToDTO)
+            .toList();
     }
 
-    public Card addCardToDeck(Long deckId, Card card) {
-        //todo: add custom exception
+    public DeckDTO addCardToDeck(Long deckId, Card card) {
         Deck deck = deckRepository.findById(deckId).orElseThrow();
         deck.getCards().add(card);
         deckRepository.save(deck);
 
-        return card;
+        return mapToDTO(deck);
     }
 
     private Deck mapToDeck(DeckDTO deckDTO) {
@@ -36,5 +39,13 @@ public class DeckService {
         deck.setName(deckDTO.getName());
         deck.setDescription(deckDTO.getDescription());
         return deck;
+    }
+
+    private DeckDTO mapToDTO(Deck deck) {
+        DeckDTO deckDTO = new DeckDTO();
+        deckDTO.setId(deck.getId());
+        deckDTO.setName(deck.getName());
+        deckDTO.setDescription(deck.getDescription());
+        return deckDTO;
     }
 }
