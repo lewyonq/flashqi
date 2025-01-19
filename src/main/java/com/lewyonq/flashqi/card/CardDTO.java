@@ -1,10 +1,16 @@
 package com.lewyonq.flashqi.card;
 
 public class CardDTO {
-    
+    private Long id;
     private String question;
     private String answer; 
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getQuestion() {
         return question;
     }

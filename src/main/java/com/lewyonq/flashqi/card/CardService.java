@@ -16,16 +16,19 @@ public class CardService {
         this.deckRepository = deckRepository;
     }
 
-    public Card saveCard(CardDTO cardDTO) {
+    public CardDTO saveCard(CardDTO cardDTO) {
         Card card = mapToCard(cardDTO);
-        return cardRepository.save(card);
+        return mapToDTO(cardRepository.save(card));
     }
 
-    public List<Card> getCards() {
-        return cardRepository.findAll();
+    public List<CardDTO> getCards() {
+        return cardRepository.findAll()
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
     }
 
-    public Card addCardToDeck(Long cardId, Long deckId) {
+    public CardDTO addCardToDeck(Long cardId, Long deckId) {
         if (cardId == null || deckId == null) {
             throw new IllegalArgumentException("Card ID and Deck ID cannot be null");
         }
@@ -40,7 +43,7 @@ public class CardService {
         deck.getCards().add(card);
         deckRepository.save(deck);
 
-        return card;
+        return mapToDTO(card);
     }
 
 
@@ -49,5 +52,13 @@ public class CardService {
         card.setQuestion(cardDTO.getQuestion());
         card.setAnswer(cardDTO.getAnswer());
         return card;
+    }
+
+    private CardDTO mapToDTO(Card card) {
+        CardDTO cardDTO = new CardDTO();
+        cardDTO.setId(card.getId());
+        cardDTO.setAnswer(card.getAnswer());
+        cardDTO.setQuestion(card.getQuestion());
+        return cardDTO;
     }
 }

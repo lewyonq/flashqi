@@ -16,18 +16,18 @@ public class CardController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Card>> getCards() {
+    public ResponseEntity<List<CardDTO>> getCards() {
         return ResponseEntity.ok(cardService.getCards());
     }
 
     @PostMapping
-    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO) {
-        Card savedCard = cardService.saveCard(cardDTO);
-        return ResponseEntity.created(URI.create("/api/v1/cards/" + savedCard.getId())).body(savedCard);
+    public ResponseEntity<CardDTO> createCard(@RequestBody CardDTO cardDTO) {
+        cardService.saveCard(cardDTO);
+        return ResponseEntity.created(URI.create("/api/v1/cards/" + cardDTO.getId())).body(cardDTO);
     }
 
     @PostMapping("/{cardId}/decks/{deckId}")
-    public ResponseEntity<Card> addToDeck(@PathVariable Long cardId, @PathVariable Long deckId) {
+    public ResponseEntity<CardDTO> addToDeck(@PathVariable Long cardId, @PathVariable Long deckId) {
         return ResponseEntity.ok(cardService.addCardToDeck(cardId, deckId));
     }
 }
