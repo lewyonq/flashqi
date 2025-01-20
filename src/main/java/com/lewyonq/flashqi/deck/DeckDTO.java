@@ -2,13 +2,13 @@ package com.lewyonq.flashqi.deck;
 
 import java.util.List;
 
-import com.lewyonq.flashqi.card.Card;
+import com.lewyonq.flashqi.card.CardDTO;
 
 public class DeckDTO {
     private Long id;
     private String name;
     private String description;
-    private List<Card> cards;
+    private List<CardDTO> cards;
 
     public Long getId() {
         return id;
@@ -28,10 +28,10 @@ public class DeckDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<Card> getCards() {
+    public List<CardDTO> getCards() {
         return cards;
     }
-    public void setCards(List<Card> cards) {
+    public void setCards(List<CardDTO> cards) {
         this.cards = cards;
     }
 }

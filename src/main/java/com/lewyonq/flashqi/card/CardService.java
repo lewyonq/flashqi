@@ -10,21 +10,23 @@ import java.util.List;
 public class CardService {
     private final CardRepository cardRepository;
     private final DeckRepository deckRepository;
+    private final CardMapper cardMapper;
 
-    public CardService(CardRepository cardRepository, DeckRepository deckRepository) {
+    public CardService(CardRepository cardRepository, DeckRepository deckRepository, CardMapper cardMapper) {
         this.cardRepository = cardRepository;
         this.deckRepository = deckRepository;
+        this.cardMapper = cardMapper;
     }
 
     public CardDTO saveCard(CardDTO cardDTO) {
-        Card card = mapToCard(cardDTO);
-        return mapToDTO(cardRepository.save(card));
+        Card card = cardMapper.mapToCard(cardDTO);
+        return cardMapper.mapToDTO(cardRepository.save(card));
     }
 
     public List<CardDTO> getCards() {
         return cardRepository.findAll()
                 .stream()
-                .map(this::mapToDTO)
+                .map(cardMapper::mapToDTO)
                 .toList();
     }
 
@@ -43,22 +45,6 @@ public class CardService {
         deck.getCards().add(card);
         deckRepository.save(deck);
 
-        return mapToDTO(card);
-    }
-
-
-    private Card mapToCard(CardDTO cardDTO) {
-        Card card = new Card();
-        card.setQuestion(cardDTO.getQuestion());
-        card.setAnswer(cardDTO.getAnswer());
-        return card;
-    }
-
-    private CardDTO mapToDTO(Card card) {
-        CardDTO cardDTO = new CardDTO();
-        cardDTO.setId(card.getId());
-        cardDTO.setAnswer(card.getAnswer());
-        cardDTO.setQuestion(card.getQuestion());
-        return cardDTO;
+        return cardMapper.mapToDTO(card);
     }
 }

@@ -1,24 +1,25 @@
 package com.lewyonq.flashqi.deck;
 
-import com.lewyonq.flashqi.card.Card;
-import com.lewyonq.flashqi.card.CardDTO;
-import com.lewyonq.flashqi.card.CardService;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.lewyonq.flashqi.card.CardDTO;
 
 @RestController
 @RequestMapping("/api/v1/decks")
 public class DeckController {
     private final DeckService deckService;
-    private final CardService cardService;
 
-    public DeckController(DeckService deckService, CardService cardService) {
+    public DeckController(DeckService deckService) {
         this.deckService = deckService;
-        this.cardService = cardService;
     }
 
     @GetMapping
@@ -34,8 +35,7 @@ public class DeckController {
 
     @PostMapping("/{deckId}/create-card")
     public ResponseEntity<CardDTO> addCardToDeck(@PathVariable Long deckId, @RequestBody CardDTO cardDTO) {
-        CardDTO savedCard = cardService.saveCard(cardDTO);
-        CardDTO cardWithDeck = deckService.addCardToDeck(deckId, savedCard);
+        CardDTO cardWithDeck = deckService.addCardToDeck(deckId, cardDTO);
         return ResponseEntity.created(URI.create("api/v1/decks" + deckId + "/cards" + cardWithDeck.getId()))
                 .body(cardWithDeck);
     }
