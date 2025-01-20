@@ -1,40 +1,54 @@
 package com.lewyonq.flashqi.deck;
 
-import com.lewyonq.flashqi.card.Card;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.lewyonq.flashqi.card.Card;
+import com.lewyonq.flashqi.card.CardDTO;
+import com.lewyonq.flashqi.card.CardMapper;
+import com.lewyonq.flashqi.card.CardRepository;
 
 @Service
 public class DeckService {
     private final DeckRepository deckRepository;
+    private final CardRepository cardRepository;
+    private final DeckMapper deckMapper;
+    private final CardMapper cardMapper;
 
-    public DeckService(DeckRepository deckRepository) {
+    public DeckService(
+        DeckRepository deckRepository,
+        CardRepository cardRepository,
+        DeckMapper deckMapper,
+        CardMapper cardMapper) {
         this.deckRepository = deckRepository;
+        this.cardRepository = cardRepository;
+        this.deckMapper = deckMapper;
+        this.cardMapper = cardMapper;
     }
 
-    public Deck saveDeck(DeckDTO deckDTO) {
-        Deck deck = mapToDeck(deckDTO);
-        return deckRepository.save(deck);
+    public DeckDTO saveDeck(DeckDTO deckDTO) {
+        Deck deck = deckMapper.mapToDeck(deckDTO);
+        return deckMapper.mapToDTO(deckRepository.save(deck));
     }
 
-    public List<Deck> getDecks() {
-        return deckRepository.findAll();
+    public List<DeckDTO> getDecks() {
+        return deckRepository.findAll()
+            .stream()
+            .map(deckMapper::mapToDTO)
+            .toList();
     }
 
-    public Card addCardToDeck(Long deckId, Card card) {
-        //todo: add custom exception
+
+    // card add x2 to db???
+    public CardDTO addCardToDeck(Long deckId, CardDTO cardDTO) {
         Deck deck = deckRepository.findById(deckId).orElseThrow();
+        Card card = cardMapper.mapToCard(cardDTO);
+        card = cardRepository.save(card);
+
         deck.getCards().add(card);
         deckRepository.save(deck);
 
-        return card;
-    }
-
-    private Deck mapToDeck(DeckDTO deckDTO) {
-        Deck deck = new Deck();
-        deck.setName(deckDTO.getName());
-        deck.setDescription(deckDTO.getDescription());
-        return deck;
+        return cardMapper.mapToDTO(card);
     }
 }
