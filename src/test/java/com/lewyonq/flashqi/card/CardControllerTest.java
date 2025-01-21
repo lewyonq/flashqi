@@ -29,11 +29,11 @@ class CardControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Card testCard;
+    private CardDTO testCard;
 
     @BeforeEach
     void setUp() {
-        testCard = new Card();
+        testCard = new CardDTO();
         testCard.setQuestion("Test Question");
         testCard.setAnswer("Test Answer");
     }
@@ -52,7 +52,7 @@ class CardControllerTest {
 
     @Test
     void shouldGetAllCards() throws Exception {
-        List<Card> cards = Arrays.asList(testCard);
+        List<CardDTO> cards = Arrays.asList(testCard);
         when(cardService.getCards()).thenReturn(cards);
 
         mockMvc.perform(get("/api/v1/cards"))

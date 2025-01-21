@@ -39,8 +39,6 @@ public class DeckService {
             .toList();
     }
 
-
-    // card add x2 to db???
     public CardDTO addCardToDeck(Long deckId, CardDTO cardDTO) {
         Deck deck = deckRepository.findById(deckId).orElseThrow();
         Card card = cardMapper.mapToCard(cardDTO);
