@@ -2,6 +2,8 @@ package com.lewyonq.flashqi.card;
 
 import com.lewyonq.flashqi.deck.Deck;
 import com.lewyonq.flashqi.deck.DeckRepository;
+import com.lewyonq.flashqi.exception.DeckNotFoundException;
+import com.lewyonq.flashqi.exception.CardNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,13 +37,16 @@ public class CardService {
             throw new IllegalArgumentException("Card ID and Deck ID cannot be null");
         }
         
-        Deck deck = deckRepository.findById(deckId).orElseThrow();
+        Deck deck = deckRepository.findById(deckId)
+                .orElseThrow(() -> new DeckNotFoundException(deckId));
 
         if (deck.getCards().stream().anyMatch(c -> c.getId().equals(cardId))) {
             throw new IllegalStateException("This card is already added to deck " + deck.getName() + "!");
         }
 
-        Card card = cardRepository.findById(cardId).orElseThrow();
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new CardNotFoundException(cardId));
+
         deck.getCards().add(card);
         deckRepository.save(deck);
 

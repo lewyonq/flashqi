@@ -8,6 +8,7 @@ import com.lewyonq.flashqi.card.Card;
 import com.lewyonq.flashqi.card.CardDTO;
 import com.lewyonq.flashqi.card.CardMapper;
 import com.lewyonq.flashqi.card.CardRepository;
+import com.lewyonq.flashqi.exception.DeckNotFoundException;
 
 @Service
 public class DeckService {
@@ -40,7 +41,8 @@ public class DeckService {
     }
 
     public CardDTO addCardToDeck(Long deckId, CardDTO cardDTO) {
-        Deck deck = deckRepository.findById(deckId).orElseThrow();
+        Deck deck = deckRepository.findById(deckId)
+                .orElseThrow(() -> new DeckNotFoundException(deckId));
         Card card = cardMapper.mapToCard(cardDTO);
         card = cardRepository.save(card);
 
