@@ -32,6 +32,57 @@ public class CardService {
                 .toList();
     }
 
+    public CardDTO getCardById(Long cardId) {
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new CardNotFoundException(cardId));
+        CardDTO cardDTO = cardMapper.mapToDTO(card);
+        return cardDTO;
+    }
+
+    public CardDTO updateCardById(Long cardId, CardDTO cardDTO) {
+        if (cardId == null) {
+            throw new IllegalArgumentException("Card ID cannot be null");
+        }
+
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new CardNotFoundException(cardId));
+
+        if (cardDTO.getQuestion() != null) {
+            String question = cardDTO.getQuestion().trim();
+            if (question.isEmpty()) {
+                throw new IllegalArgumentException("Question cannot be empty");
+            } 
+            card.setQuestion(question);
+        }
+
+        if (cardDTO.getAnswer() != null) {
+            String answer = cardDTO.getAnswer().trim();
+            if (answer.isEmpty()) {
+                throw new IllegalArgumentException("Answer cannot be empty");
+            }
+            card.setAnswer(answer);
+        }
+        
+        cardRepository.save(card);
+        return cardMapper.mapToDTO(card);
+    }
+
+    public void deleteCardById(Long cardId) {
+        if (cardId == null) {
+            throw new IllegalArgumentException("Card ID cannot be null");
+        }
+
+        if (!cardRepository.existsById(cardId)) {
+            throw new CardNotFoundException(cardId);
+        }
+
+        try {
+            cardRepository.deleteById(cardId);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete card with ID: " + cardId);
+        }
+    }
+
     public CardDTO addCardToDeck(Long cardId, Long deckId) {
         if (cardId == null || deckId == null) {
             throw new IllegalArgumentException("Card ID and Deck ID cannot be null");
