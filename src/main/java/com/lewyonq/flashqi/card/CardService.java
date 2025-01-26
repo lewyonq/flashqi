@@ -40,26 +40,16 @@ public class CardService {
     }
 
     public CardDTO updateCardById(Long cardId, CardDTO cardDTO) {
-        if (cardId == null) {
-            throw new IllegalArgumentException("Card ID cannot be null");
-        }
-
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new CardNotFoundException(cardId));
 
         if (cardDTO.getQuestion() != null) {
             String question = cardDTO.getQuestion().trim();
-            if (question.isEmpty()) {
-                throw new IllegalArgumentException("Question cannot be empty");
-            } 
             card.setQuestion(question);
         }
 
         if (cardDTO.getAnswer() != null) {
             String answer = cardDTO.getAnswer().trim();
-            if (answer.isEmpty()) {
-                throw new IllegalArgumentException("Answer cannot be empty");
-            }
             card.setAnswer(answer);
         }
         
@@ -68,10 +58,6 @@ public class CardService {
     }
 
     public void deleteCardById(Long cardId) {
-        if (cardId == null) {
-            throw new IllegalArgumentException("Card ID cannot be null");
-        }
-
         if (!cardRepository.existsById(cardId)) {
             throw new CardNotFoundException(cardId);
         }
@@ -84,10 +70,6 @@ public class CardService {
     }
 
     public CardDTO addCardToDeck(Long cardId, Long deckId) {
-        if (cardId == null || deckId == null) {
-            throw new IllegalArgumentException("Card ID and Deck ID cannot be null");
-        }
-        
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new DeckNotFoundException(deckId));
 

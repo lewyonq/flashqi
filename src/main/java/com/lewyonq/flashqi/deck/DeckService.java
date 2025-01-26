@@ -40,6 +40,42 @@ public class DeckService {
             .toList();
     }
 
+    public DeckDTO getDeckById(Long deckId) {
+        Deck deck = deckRepository.findById(deckId)
+                .orElseThrow(() -> new DeckNotFoundException(deckId));
+        DeckDTO deckDTO = deckMapper.mapToDTO(deck);
+        return deckDTO;
+    }
+
+    public DeckDTO updateDeckById(Long deckId, DeckDTO deckDTO) {
+        Deck deck = deckRepository.findById(deckId)
+                .orElseThrow(() -> new DeckNotFoundException(deckId));
+        
+        if (deckDTO.getName() != null) {
+            String name = deckDTO.getName().trim();
+            deck.setName(name);            
+        }
+        if (deckDTO.getDescription() != null) {
+            String description = deckDTO.getDescription().trim();
+            deck.setDescription(description);            
+        }
+
+        deckRepository.save(deck);
+        return deckMapper.mapToDTO(deck);
+    }
+
+    public void deleteDeckById(Long deckId) {
+        if (!deckRepository.existsById(deckId)) {
+            throw new DeckNotFoundException(deckId);
+        }
+
+        try {
+            deckRepository.deleteById(deckId);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete deck with ID: " + deckId);
+        }
+    }
+
     public CardDTO addCardToDeck(Long deckId, CardDTO cardDTO) {
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new DeckNotFoundException(deckId));

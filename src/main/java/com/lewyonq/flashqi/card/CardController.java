@@ -25,11 +25,17 @@ public class CardController {
         return ResponseEntity.ok(cardService.getCards());
     }
 
+    @PostMapping
+    public ResponseEntity<CardDTO> createCard(@RequestBody @Valid CardDTO cardDTO) {
+        cardService.saveCard(cardDTO);
+        return ResponseEntity.created(URI.create("/api/v1/cards/" + cardDTO.getId())).body(cardDTO);
+    }
+
     @GetMapping("/{cardId}")
     public ResponseEntity<CardDTO> getCardById(@PathVariable Long cardId) {
         try {
             return ResponseEntity.ok(cardService.getCardById(cardId));
-        } catch (CardNotFoundException cardNotFoundException){
+        } catch (CardNotFoundException e){
             return ResponseEntity.notFound().build();
         }
     }
@@ -39,18 +45,8 @@ public class CardController {
         try {
             CardDTO updatedCard = cardService.updateCardById(cardId, cardDTO);
             return ResponseEntity.ok(updatedCard);
-        } catch (CardNotFoundException cardNotFoundException) {
+        } catch (CardNotFoundException e) {
             return ResponseEntity.notFound().build();
-        }
-    }
-    
-    @PostMapping
-    public ResponseEntity<CardDTO> createCard(@RequestBody @Valid CardDTO cardDTO) {
-        try {
-            cardService.saveCard(cardDTO);
-            return ResponseEntity.created(URI.create("/api/v1/cards/" + cardDTO.getId())).body(cardDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -59,7 +55,7 @@ public class CardController {
         try {
             cardService.deleteCardById(cardId);
             return ResponseEntity.noContent().build();
-        } catch (CardNotFoundException cardNotFoundException) {
+        } catch (CardNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -68,11 +64,11 @@ public class CardController {
     public ResponseEntity<CardDTO> addToDeck(@PathVariable Long cardId, @PathVariable Long deckId) {
         try {
             return ResponseEntity.ok(cardService.addCardToDeck(cardId, deckId));
-        } catch (CardNotFoundException cardNotFoundException) {
+        } catch (CardNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (DeckNotFoundException deckNotFoundException) {
+        } catch (DeckNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (IllegalStateException illegalStateException) {
+        } catch (IllegalStateException e) {
             return ResponseEntity.badRequest().build();
         }
     }
