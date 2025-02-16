@@ -74,7 +74,7 @@ public class CardService {
                 .orElseThrow(() -> new DeckNotFoundException(deckId));
 
         if (deck.getCards().stream().anyMatch(c -> c.getId().equals(cardId))) {
-            throw new IllegalStateException("This card is already added to deck " + deck.getName() + "!");
+            throw new IllegalStateException("This card is already added to deck " + deck.getTitle() + "!");
         }
 
         Card card = cardRepository.findById(cardId)

@@ -51,9 +51,9 @@ public class DeckService {
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new DeckNotFoundException(deckId));
         
-        if (deckDTO.getName() != null) {
-            String name = deckDTO.getName().trim();
-            deck.setName(name);            
+        if (deckDTO.getTitle() != null) {
+            String title = deckDTO.getTitle().trim();
+            deck.setTitle(title);            
         }
         if (deckDTO.getDescription() != null) {
             String description = deckDTO.getDescription().trim();

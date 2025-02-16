@@ -38,7 +38,7 @@ public class DeckControllerTest {
     @BeforeEach
     void SetUp() {
         testDeck = new DeckDTO();
-        testDeck.setName("Test name");
+        testDeck.setTitle("Test name");
         testDeck.setDescription("Test description");
     }
 

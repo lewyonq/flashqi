@@ -12,7 +12,7 @@ public class Deck {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @Column
     private String description;
@@ -29,15 +29,22 @@ public class Deck {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        this.id = id;
     }
 
-    public void setName(String name) {
-        if (name == null) {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        if (title == null) {
             throw new IllegalArgumentException("Name cannot be null");
         }
-        this.name = name;
+        this.title = title;
     }
 
     public String getDescription() {

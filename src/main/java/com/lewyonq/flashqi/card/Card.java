@@ -22,6 +22,17 @@ public class Card {
     @JsonIgnore
     private List<Deck> decks;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        this.id = id;
+    }
+
     public String getQuestion() {
         return question;
     }
@@ -42,10 +53,6 @@ public class Card {
             throw new IllegalArgumentException("Answer cannot be null");
         }
         this.answer = answer;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public List<Deck> getDecks() {

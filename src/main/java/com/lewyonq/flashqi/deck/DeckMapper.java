@@ -14,7 +14,7 @@ public class DeckMapper {
 
     public Deck mapToDeck(DeckDTO deckDTO) {
         Deck deck = new Deck();
-        deck.setName(deckDTO.getName());
+        deck.setTitle(deckDTO.getTitle());
         deck.setDescription(deckDTO.getDescription());
         return deck;
     }
@@ -22,7 +22,7 @@ public class DeckMapper {
     public DeckDTO mapToDTO(Deck deck) {
         DeckDTO deckDTO = new DeckDTO();
         deckDTO.setId(deck.getId());
-        deckDTO.setName(deck.getName());
+        deckDTO.setTitle(deck.getTitle());
         deckDTO.setDescription(deck.getDescription());
         if (deck.getCards() != null) {
             deckDTO.setCards(deck.getCards()

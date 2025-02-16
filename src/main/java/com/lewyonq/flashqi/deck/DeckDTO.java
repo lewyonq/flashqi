@@ -6,7 +6,7 @@ import com.lewyonq.flashqi.card.CardDTO;
 
 public class DeckDTO {
     private Long id;
-    private String name;
+    private String title;
     private String description;
     private List<CardDTO> cards;
 
@@ -16,11 +16,11 @@ public class DeckDTO {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = name;
     }
     public String getDescription() {
         return description;

@@ -67,7 +67,7 @@ class CardControllerTest {
     }
 
     @Test
-    public void getCardById_WhenCardNotFound_ShouldReturnNotFound() throws Exception {
+    void getCardById_WhenCardNotFound_ShouldReturnNotFound() throws Exception {
         Long cardId = 1L;
         testCard.setId(cardId);
         when(cardService.getCardById(cardId)).thenThrow(new CardNotFoundException(cardId));

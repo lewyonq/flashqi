@@ -22,8 +22,8 @@ public class DeckTest {
     @Test
     void shouldSetAndGetName() {
         String name = "Test name";
-        deck.setName(name);
-        assertEquals(name, deck.getName());
+        deck.setTitle(name);
+        assertEquals(name, deck.getTitle());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class DeckTest {
     @Test
     void shouldNotAllowNullName() {
         assertThrows(IllegalArgumentException.class, () -> {
-            deck.setName(null);
+            deck.setTitle(null);
         });
     }
 
